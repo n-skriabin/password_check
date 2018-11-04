@@ -7,14 +7,14 @@ namespace lab_01
     {
         static void Main(string[] args)
         {
-            string way = string.Empty;
-            string finalVerdict = string.Empty;
+            string way;
+            string finalVerdict;
 
             do {
                 int passwordQuality = 0;
+                finalVerdict = string.Empty;
 
-                Console.WriteLine("\n" +
-                    "Please, input password: ");
+                Console.WriteLine("\nPlease, input password: ");
 
                 var password = Console.ReadLine();
 
@@ -32,14 +32,15 @@ namespace lab_01
                 way = Console.ReadLine();
 
             } while (way == "0");
-
-            Console.ReadKey();
         }
 
         private static void WritePasswordReport(int passwordQuality, int passwordLength, string finalVerdict)
         {
-            Console.WriteLine($"Password quality: {passwordQuality}\n");
-            Console.WriteLine($"{finalVerdict}");
+            Console.WriteLine($"\nPassword quality: {passwordQuality}/100\n");
+
+            if (finalVerdict != string.Empty) {
+                Console.WriteLine($"Recommendations:\n{finalVerdict}");
+            }
 
             if (passwordQuality < 30)
             {
@@ -60,17 +61,16 @@ namespace lab_01
         private static int CheckSpecialSymbols(string password, ref string finalVerdict)
         {
             int passwordQuality = 0;
-            var regExSpecSymb = new Regex("(?=.*[!@#$%^&_,.-=+`~/\\|])");
+            var regExSpecSymb = new Regex("(?=.*[!@#$%^&_;:,.-=+`~/\\|])");
 
             if (regExSpecSymb.IsMatch(password))
             {
                 passwordQuality += 20;
-                finalVerdict += "have special symbols(!@#$%^&_,.-=+`~/\\|), "; 
             }
             else
             {
                 passwordQuality -= 20;
-                finalVerdict += "havn't got special symbols(!@#$%^&_,.-=+`~/\\|), ";
+                finalVerdict += "-add special characters(!@#$%^&_;:,.-=+`~/\\|)\n";
             }
 
             return passwordQuality;
@@ -84,12 +84,11 @@ namespace lab_01
             if (regExNumb.IsMatch(password))
             {
                 passwordQuality += 10;
-                finalVerdict += "Your password have numbers, ";
             }
             else
             {
                 passwordQuality -= 10;
-                finalVerdict += "Your password havn't got numbers, ";
+                finalVerdict += "-add numbers\n";
             }
 
             return passwordQuality;
@@ -104,23 +103,21 @@ namespace lab_01
             if (regExLow.IsMatch(password))
             {
                 passwordQuality += 10;
-                finalVerdict += "have chars in low case ";
             }
             else
             {
                 passwordQuality -= 10;
-                finalVerdict += "havn't got chars in low case ";
+                finalVerdict += "-add chars in lowercase\n";
             }
 
             if (regExUp.IsMatch(password))
             {
                 passwordQuality += 10;
-                finalVerdict += "and have chars in upper case.";
             }
             else
             {
                 passwordQuality -= 10;
-                finalVerdict += "and have chars in upper case.";
+                finalVerdict += "-add chars in uppercase\n";
             }
 
             return passwordQuality;
@@ -134,19 +131,18 @@ namespace lab_01
             if (passwordLength < 6)
             {
                 passwordQuality = (passwordLength - 6) * 10;
-                finalVerdict += "too short, ";
+                finalVerdict += "-too short(optimal length - 8 characters)\n";
             }
 
             if (passwordLength >= 6 && passwordLength <= 8)
             {
                 passwordQuality = (passwordLength * 5) + 10;
-                finalVerdict += "normal length, ";
             }
 
             if (passwordLength > 8)
             {
                 passwordQuality = 50 + (8 - passwordLength) * 2;
-                finalVerdict += "too long, ";
+                finalVerdict += "-too long(optimal length - 8 characters)\n";
             }
 
             return passwordQuality;
