@@ -46,17 +46,17 @@ namespace lab_01
                 Console.WriteLine($"Recommendations:\n{finalVerdict}");
             }
 
-            if (passwordQuality < 30)
+            if (passwordQuality < 50)
             {
                 Console.WriteLine("Your password is generally bad.\n");
             }
 
-            if (passwordQuality >= 30 && passwordQuality <= 80)
+            if (passwordQuality >= 50 && passwordQuality <= 100)
             {
                 Console.WriteLine("Your password is normal.\n");
             }
 
-            if (passwordQuality > 80)
+            if (passwordQuality > 100)
             {
                 Console.WriteLine("Your password is beautiful.\n");
             }
