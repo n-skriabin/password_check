@@ -7,8 +7,8 @@ namespace lab_01
     {
         static void Main(string[] args)
         {
-            string way;
             string finalVerdict;
+            string way = String.Empty;           
 
             do {
                 int passwordQuality = 0;
@@ -26,17 +26,21 @@ namespace lab_01
 
                 passwordQuality += CheckLowAndUpperCase(password, ref finalVerdict);
 
+                passwordQuality += CheckPasswordInArrayList(password, ref finalVerdict);
+
                 WritePasswordReport(passwordQuality, password.Length, finalVerdict);
 
-                Console.WriteLine("Do you want to close programm? (no - 0/yes - any key)");
-                way = Console.ReadLine();
+                while (way != "y" && way != "n") {
+                    Console.WriteLine("Do you want to close programm? (y/n)");
+                    way = Console.ReadLine();
+                }
 
-            } while (way == "0");
+            } while (way == "n");
         }
 
         private static void WritePasswordReport(int passwordQuality, int passwordLength, string finalVerdict)
         {
-            Console.WriteLine($"\nPassword quality: {passwordQuality}/100\n");
+            Console.WriteLine($"\nPassword quality: {passwordQuality}/140\n");
 
             if (finalVerdict != string.Empty) {
                 Console.WriteLine($"Recommendations:\n{finalVerdict}");
@@ -61,16 +65,16 @@ namespace lab_01
         private static int CheckSpecialSymbols(string password, ref string finalVerdict)
         {
             int passwordQuality = 0;
-            var regExSpecSymb = new Regex("(?=.*[!@#$%^&_;:,.-=+`~/\\|])");
+            var regExSpecSymb = new Regex("['\"@%#$|`+=,._/!]");
 
             if (regExSpecSymb.IsMatch(password))
             {
-                passwordQuality += 20;
+                passwordQuality += 33;
             }
             else
             {
                 passwordQuality -= 20;
-                finalVerdict += "-add special characters(!@#$%^&_;:,.-=+`~/\\|)\n";
+                finalVerdict += "-add special characters('\"@%#$|`+=,._/!)\n";
             }
 
             return passwordQuality;
@@ -83,7 +87,7 @@ namespace lab_01
 
             if (regExNumb.IsMatch(password))
             {
-                passwordQuality += 10;
+                passwordQuality += 5;
             }
             else
             {
@@ -102,7 +106,7 @@ namespace lab_01
 
             if (regExLow.IsMatch(password))
             {
-                passwordQuality += 10;
+                passwordQuality += 2;
             }
             else
             {
@@ -128,21 +132,34 @@ namespace lab_01
             int passwordQuality = 0;
             var passwordLength = password.Length;
             
-            if (passwordLength < 6)
+            if (passwordLength < 11)
             {
                 passwordQuality = (passwordLength - 6) * 10;
-                finalVerdict += "-too short(optimal length - 8 characters)\n";
+                finalVerdict += "-too short(minimal length - 11 characters)\n";
             }
 
-            if (passwordLength >= 6 && passwordLength <= 8)
+            if (passwordLength > 10)
             {
                 passwordQuality = (passwordLength * 5) + 10;
             }
 
-            if (passwordLength > 8)
+            return passwordQuality;
+        }
+
+        static public int CheckPasswordInArrayList(string password, ref string finalVerdict)
+        {
+            int passwordQuality = 0;
+            var passwordFound = PasswordList.PasswordArrayString.Contains(password);
+
+            if (!passwordFound)
             {
-                passwordQuality = 50 + (8 - passwordLength) * 2;
-                finalVerdict += "-too long(optimal length - 8 characters)\n";
+                passwordQuality = +10;
+            }
+
+            if (passwordFound)
+            {
+                passwordQuality = -50;
+                finalVerdict += "-your password is found in the most used passwords database, please, change password and try again\n";
             }
 
             return passwordQuality;
