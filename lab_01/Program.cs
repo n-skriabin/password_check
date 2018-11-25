@@ -132,13 +132,13 @@ namespace lab_01
             int passwordQuality = 0;
             var passwordLength = password.Length;
             
-            if (passwordLength < 11)
+            if (passwordLength < 12)
             {
                 passwordQuality = (passwordLength - 6) * 10;
-                finalVerdict += "-too short(minimal length - 11 characters)\n";
+                finalVerdict += "-too short(minimal length - 12 characters)\n";
             }
 
-            if (passwordLength > 10)
+            if (passwordLength > 11)
             {
                 passwordQuality = (passwordLength * 5) + 10;
             }
