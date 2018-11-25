@@ -40,7 +40,7 @@ namespace lab_01
 
         private static void WritePasswordReport(int passwordQuality, int passwordLength, string finalVerdict)
         {
-            Console.WriteLine($"\nPassword quality: {passwordQuality}/140\n");
+            Console.WriteLine($"\nPassword quality: {passwordQuality}/140 [(-138)-(140)]\n");
 
             if (finalVerdict != string.Empty) {
                 Console.WriteLine($"Recommendations:\n{finalVerdict}");
