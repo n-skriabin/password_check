@@ -31,7 +31,7 @@ namespace lab_01
                 WritePasswordReport(passwordQuality, password.Length, finalVerdict);
 
                 while (way != "y" && way != "n") {
-                    Console.WriteLine("Do you want to close programm? (only y/n)");
+                    Console.WriteLine("Do you want to CLOSE programm? (only y/n)");
                     way = Console.ReadLine();
                 }
 
