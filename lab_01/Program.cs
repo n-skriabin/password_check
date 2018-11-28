@@ -87,7 +87,7 @@ namespace lab_01
 
             if (regExNumb.IsMatch(password))
             {
-                passwordQuality += 5;
+                passwordQuality += 2;
             }
             else
             {
@@ -106,7 +106,7 @@ namespace lab_01
 
             if (regExLow.IsMatch(password))
             {
-                passwordQuality += 2;
+                passwordQuality += 5;
             }
             else
             {
